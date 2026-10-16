@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundEffect" load_steps=2 format=3 uid="uid://ccvr3t4blusjy"]
+
+[ext_resource type="Script" path="res://scripts/classes/sound_effect.gd" id="1_wntnj"]
+
+[resource]
+script = ExtResource("1_wntnj")
+display_name = "cool"
+path_to_sound = "C:\\Users\\Felix\\Downloads\\embankment pier.mp3"
+emoji = "🤡"

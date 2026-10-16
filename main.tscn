@@ -1,0 +1,110 @@
+[gd_scene load_steps=7 format=3 uid="uid://gnhroxve1obr"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_4pufq"]
+[ext_resource type="Theme" uid="uid://bybobnlx5kgbl" path="res://theme.tres" id="2_tk1tv"]
+[ext_resource type="StyleBox" uid="uid://bxfatexmf6nfx" path="res://styles/background_box.tres" id="3_sen2b"]
+[ext_resource type="Script" path="res://drag_control.gd" id="4_m2u7d"]
+[ext_resource type="PackedScene" uid="uid://cle70hrepbki5" path="res://scenes/interface/sound_display.tscn" id="5_ar08i"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_3qb72"]
+buffer_length = 0.01
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4pufq")
+
+[node name="Audio" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamGenerator_3qb72")
+volume_db = -40.0
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_tk1tv")
+theme_override_styles/panel = ExtResource("3_sen2b")
+
+[node name="Container" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Container"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Container/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+alignment = 1
+script = ExtResource("4_m2u7d")
+
+[node name="Label" type="Label" parent="Panel/Container/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_tk1tv")
+text = "cool sound board"
+
+[node name="Button" type="Button" parent="Panel/Container/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+text = " 🗕 "
+
+[node name="Button2" type="Button" parent="Panel/Container/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+text = "×"
+
+[node name="PanelContainer" type="PanelContainer" parent="Panel/Container/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_tk1tv")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Container/VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="VScrollBar" type="ScrollContainer" parent="Panel/Container/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/MarginContainer/VScrollBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/MarginContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/MarginContainer/VScrollBar/VBoxContainer/HBoxContainer" instance=ExtResource("5_ar08i")]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/MarginContainer/VScrollBar/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="Panel/Container/VBoxContainer/PanelContainer/MarginContainer/VScrollBar/VBoxContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(60, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 60
+text = "🤔"
+
+[node name="Label" type="Label" parent="Panel/Container/VBoxContainer/PanelContainer/MarginContainer/VScrollBar/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "{name}"
+
+[connection signal="pressed" from="Panel/Container/VBoxContainer/HBoxContainer/Button" to="Panel/Container/VBoxContainer/HBoxContainer" method="_on_minimize_pressed"]
+[connection signal="pressed" from="Panel/Container/VBoxContainer/HBoxContainer/Button2" to="Panel/Container/VBoxContainer/HBoxContainer" method="_on_close_pressed"]
