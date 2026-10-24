@@ -8,14 +8,15 @@ var phase: float = 0
 var secondary_phase: float = 0
 var sfi: float
 var sfcr: float
-@export var snapped: bool
+@export var snapped_sound: bool #named to differentiate variable from built-in func
+
 func start(fr: float, generator: AudioStreamGenerator, pb: AudioStreamGeneratorPlayback, second_freq_influence: float, second_freq_change_rate: float, s:bool) -> void: 
 	frequency = fr
 	audio_stream_generator = generator
 	playback = pb
 	sfcr = second_freq_change_rate
 	sfi = second_freq_influence
-	snapped = s
+	snapped_sound = s
 
 
 func every_frame():
@@ -31,7 +32,7 @@ func fill_buffer() -> void:
 	for i in range(frames_available):
 		# Generate a sine wave sample (Left and Right channel)
 		var sample: float
-		if snapped:
+		if snapped_sound:
 			sample = snapped(sin(phase * TAU), 1)
 		else:
 			sample = sin(phase * TAU)

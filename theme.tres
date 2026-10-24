@@ -3,7 +3,7 @@
 [sub_resource type="SystemFont" id="SystemFont_us742"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m2gly"]
-bg_color = Color(0.81473, 0.640837, 0.856735, 1)
+bg_color = Color(0.815686, 0.639216, 0.854902, 0.478431)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8

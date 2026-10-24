@@ -1,15 +1,27 @@
-[gd_scene load_steps=7 format=3 uid="uid://gnhroxve1obr"]
+[gd_scene load_steps=14 format=3 uid="uid://gnhroxve1obr"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_4pufq"]
+[ext_resource type="Script" path="res://scripts/classes/sound_effect.gd" id="2_l1pd6"]
 [ext_resource type="Theme" uid="uid://bybobnlx5kgbl" path="res://theme.tres" id="2_tk1tv"]
 [ext_resource type="StyleBox" uid="uid://bxfatexmf6nfx" path="res://styles/background_box.tres" id="3_sen2b"]
-[ext_resource type="Script" path="res://drag_control.gd" id="4_m2u7d"]
+[ext_resource type="PackedScene" uid="uid://dawvvjluljh8h" path="res://scenes/interface/scroller.tscn" id="4_finpa"]
 [ext_resource type="PackedScene" uid="uid://cle70hrepbki5" path="res://scenes/interface/sound_display.tscn" id="5_ar08i"]
+[ext_resource type="Script" path="res://scripts/config_controller.tres.gd" id="6_8tv2u"]
+[ext_resource type="PackedScene" uid="uid://cvcc21p0bq312" path="res://scenes/interface/add_sound_display.tscn" id="7_yosci"]
+[ext_resource type="Script" path="res://scripts/confirm_sound_deletion.gd" id="8_rb1df"]
+[ext_resource type="FontFile" uid="uid://dpv8qrph2ijc6" path="res://Rubik-Medium.ttf" id="9_asuf0"]
+[ext_resource type="Script" path="res://scripts/sound_adder_popup.gd" id="11_wm0sm"]
+
+[sub_resource type="Resource" id="Resource_oe602"]
+script = ExtResource("2_l1pd6")
+display_name = "silly sound"
+path_to_sound = "C:\\Users\\Felix\\Downloads\\thank you for travelling on the northern line.mp3"
+emoji = "🥱"
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_3qb72"]
 buffer_length = 0.01
 
-[node name="Control" type="Control"]
+[node name="Control" type="Control" node_paths=PackedStringArray("main_scene", "settings_scene", "opaque_background", "scroller", "sound_deleter", "sound_adder", "sound_adder_popup")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +29,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4pufq")
+main_scene = NodePath("Panel/Container/VBoxContainer/PanelContainer/Main")
+settings_scene = NodePath("Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer")
+opaque_background = NodePath("Panel/OpaqueBG")
+scroller = NodePath("Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer")
+sound_deleter = NodePath("Panel/Container/SoundDeleter")
+sound_adder = NodePath("Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer/SoundAdder")
+sound_adder_popup = NodePath("Panel/Container/SoundAdderPopup")
+built_in_sounds = Array[ExtResource("2_l1pd6")]([SubResource("Resource_oe602")])
 
 [node name="Audio" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamGenerator_3qb72")
@@ -31,6 +51,16 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_tk1tv")
 theme_override_styles/panel = ExtResource("3_sen2b")
+
+[node name="OpaqueBG" type="ColorRect" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.482353, 1, 1)
 
 [node name="Container" type="MarginContainer" parent="Panel"]
 layout_mode = 1
@@ -47,64 +77,275 @@ theme_override_constants/margin_bottom = 3
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/Container"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Container/VBoxContainer"]
-custom_minimum_size = Vector2(0, 10)
+[node name="HBoxContainer" parent="Panel/Container/VBoxContainer" instance=ExtResource("4_finpa")]
 layout_mode = 2
-alignment = 1
-script = ExtResource("4_m2u7d")
-
-[node name="Label" type="Label" parent="Panel/Container/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_tk1tv")
-text = "cool sound board"
-
-[node name="Button" type="Button" parent="Panel/Container/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(35, 0)
-layout_mode = 2
-text = " 🗕 "
-
-[node name="Button2" type="Button" parent="Panel/Container/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(35, 0)
-layout_mode = 2
-text = "×"
 
 [node name="PanelContainer" type="PanelContainer" parent="Panel/Container/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("2_tk1tv")
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel/Container/VBoxContainer/PanelContainer"]
+[node name="Main" type="MarginContainer" parent="Panel/Container/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VScrollBar" type="ScrollContainer" parent="Panel/Container/VBoxContainer/PanelContainer/Main"]
 layout_mode = 2
 
-[node name="VScrollBar" type="ScrollContainer" parent="Panel/Container/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="GridContainer" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+
+[node name="VBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/MarginContainer/VScrollBar"]
+[node name="VBoxContainer2" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+layout_mode = 2
+
+[node name="VBoxContainer3" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+layout_mode = 2
+
+[node name="VBoxContainer4" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+layout_mode = 2
+
+[node name="VBoxContainer5" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+layout_mode = 2
+
+[node name="VBoxContainer6" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+layout_mode = 2
+
+[node name="VBoxContainer7" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+layout_mode = 2
+
+[node name="VBoxContainer8" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+layout_mode = 2
+
+[node name="VBoxContainer9" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+layout_mode = 2
+
+[node name="VBoxContainer10" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+layout_mode = 2
+
+[node name="VBoxContainer11" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+layout_mode = 2
+
+[node name="VBoxContainer12" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+layout_mode = 2
+
+[node name="SoundAdder" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("7_yosci")]
+layout_mode = 2
+
+[node name="SettingsPopulater" type="MarginContainer" parent="Panel/Container/VBoxContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("6_8tv2u")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/MarginContainer/VScrollBar/VBoxContainer"]
+[node name="Label" type="Label" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "👋 hey!"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="VBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/MarginContainer/VScrollBar/VBoxContainer/HBoxContainer" instance=ExtResource("5_ar08i")]
+[node name="Label3" type="Label" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "i'm felix!"
+horizontal_alignment = 1
+autowrap_mode = 3
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/MarginContainer/VScrollBar/VBoxContainer/HBoxContainer"]
+[node name="Label4" type="Label" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 15
+text = "thanks for downloading my little app thing! use this to troll your friends when screensharing! but first set some settings please!"
+horizontal_alignment = 1
+autowrap_mode = 3
 
-[node name="Button" type="Button" parent="Panel/Container/VBoxContainer/PanelContainer/MarginContainer/VScrollBar/VBoxContainer/HBoxContainer/VBoxContainer2"]
-custom_minimum_size = Vector2(60, 50)
+[node name="BuiltInSoundToggle" type="CheckButton" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "really quite funny,
+wouldn't recommend losing these!
+"
+focus_mode = 0
+text = "start without built-in sounds"
+
+[node name="OpaqueBackgroundToggle" type="CheckButton" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "especially helpful for people
+with visual impairment!"
+focus_mode = 0
+text = "opaque background"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 138
+
+[node name="Label2" type="Label" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = " background colour:"
+horizontal_alignment = 1
+
+[node name="ColorPicker" type="ColorPickerButton" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 60
-text = "🤔"
+size_flags_vertical = 4
+edit_alpha = false
 
-[node name="Label" type="Label" parent="Panel/Container/VBoxContainer/PanelContainer/MarginContainer/VScrollBar/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="Label5" type="Label" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer"]
+layout_mode = 2
+text = "  your name:"
+
+[node name="NameEdit" type="LineEdit" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "soup fallout"
+
+[node name="Button" type="Button" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "{name}"
+text = "confirm"
 
-[connection signal="pressed" from="Panel/Container/VBoxContainer/HBoxContainer/Button" to="Panel/Container/VBoxContainer/HBoxContainer" method="_on_minimize_pressed"]
-[connection signal="pressed" from="Panel/Container/VBoxContainer/HBoxContainer/Button2" to="Panel/Container/VBoxContainer/HBoxContainer" method="_on_close_pressed"]
+[node name="SoundDeleter" type="PanelContainer" parent="Panel/Container" node_paths=PackedStringArray("text_box")]
+visible = false
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 4
+script = ExtResource("8_rb1df")
+text_box = NodePath("MarginContainer/VBoxContainer/Label")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Container/SoundDeleter"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Container/SoundDeleter/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Container/SoundDeleter/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("9_asuf0")
+text = "Are you sure you want to delete {sound name}?"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Container/SoundDeleter/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ButtonYes" type="Button" parent="Panel/Container/SoundDeleter/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Yes"
+
+[node name="ButtonNo" type="Button" parent="Panel/Container/SoundDeleter/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "No"
+
+[node name="SoundAdderPopup" type="PanelContainer" parent="Panel/Container" node_paths=PackedStringArray("file_picker", "button", "sound_name_picker", "emoji_picker")]
+visible = false
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+size_flags_vertical = 4
+script = ExtResource("11_wm0sm")
+file_picker = NodePath("MarginContainer/VBoxContainer/FileDialog")
+button = NodePath("MarginContainer/VBoxContainer/PickFileName")
+sound_name_picker = NodePath("MarginContainer/VBoxContainer/SoundName")
+emoji_picker = NodePath("MarginContainer/VBoxContainer/Emoji")
+
+[node name="ColorRect" type="ColorRect" parent="Panel/Container/SoundAdderPopup"]
+layout_mode = 2
+color = Color(0.484408, 0.156807, 0.676554, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Container/SoundAdderPopup"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Container/SoundAdderPopup/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Panel/Container/SoundAdderPopup/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("9_asuf0")
+text = "Pick a new sound file to add"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="PickFileName" type="Button" parent="Panel/Container/SoundAdderPopup/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Pick file"
+
+[node name="SoundName" type="LineEdit" parent="Panel/Container/SoundAdderPopup/MarginContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Sound name"
+alignment = 1
+
+[node name="Emoji" type="LineEdit" parent="Panel/Container/SoundAdderPopup/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "☺"
+placeholder_text = "Emoji"
+alignment = 1
+max_length = 1
+
+[node name="FileDialog" type="FileDialog" parent="Panel/Container/SoundAdderPopup/MarginContainer/VBoxContainer"]
+title = "Open a File"
+size = Vector2i(350, 550)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.mp3")
+use_native_dialog = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Container/SoundAdderPopup/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ButtonYes" type="Button" parent="Panel/Container/SoundAdderPopup/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "OK"
+
+[node name="ButtonNo" type="Button" parent="Panel/Container/SoundAdderPopup/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Cancel
+"
+
+[connection signal="add_new_sound" from="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer/SoundAdder" to="." method="request_add_sound"]
+[connection signal="state_updated" from="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer" to="." method="_apply_state"]
+[connection signal="toggled" from="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer/OpaqueBackgroundToggle" to="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer" method="_on_check_button_toggled"]
+[connection signal="pressed" from="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer/Button" to="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer" method="_submit"]
+[connection signal="delete_sound" from="Panel/Container/SoundDeleter" to="." method="delete_sound"]
+[connection signal="pressed" from="Panel/Container/SoundDeleter/MarginContainer/VBoxContainer/HBoxContainer/ButtonYes" to="Panel/Container/SoundDeleter" method="confirmed_delete_sound"]
+[connection signal="pressed" from="Panel/Container/SoundDeleter/MarginContainer/VBoxContainer/HBoxContainer/ButtonNo" to="Panel/Container/SoundDeleter" method="not_deleting_sound"]
+[connection signal="new_sound" from="Panel/Container/SoundAdderPopup" to="." method="add_sound"]
+[connection signal="pressed" from="Panel/Container/SoundAdderPopup/MarginContainer/VBoxContainer/PickFileName" to="Panel/Container/SoundAdderPopup" method="open_picker"]
+[connection signal="file_selected" from="Panel/Container/SoundAdderPopup/MarginContainer/VBoxContainer/FileDialog" to="Panel/Container/SoundAdderPopup" method="file_selected"]
+[connection signal="pressed" from="Panel/Container/SoundAdderPopup/MarginContainer/VBoxContainer/HBoxContainer/ButtonYes" to="Panel/Container/SoundAdderPopup" method="_on_button_yes_pressed"]
+[connection signal="pressed" from="Panel/Container/SoundAdderPopup/MarginContainer/VBoxContainer/HBoxContainer/ButtonNo" to="Panel/Container/SoundAdderPopup" method="_on_button_no_pressed"]

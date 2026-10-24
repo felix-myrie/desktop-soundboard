@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cle70hrepbki5"]
+[gd_scene load_steps=3 format=3 uid="uid://cle70hrepbki5"]
 
 [ext_resource type="Script" path="res://scenes/interface/sound_display.gd" id="1_2igwl"]
+[ext_resource type="Script" path="res://scenes/interface/button.gd" id="2_8k445"]
 
 [node name="SoundPlayer" type="VBoxContainer"]
 size_flags_horizontal = 3
@@ -10,12 +11,18 @@ script = ExtResource("1_2igwl")
 custom_minimum_size = Vector2(60, 50)
 layout_mode = 2
 size_flags_horizontal = 4
+focus_mode = 0
 theme_override_font_sizes/font_size = 60
 text = "🤔"
+script = ExtResource("2_8k445")
 
 [node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "{name}"
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [connection signal="pressed" from="Button" to="." method="play_sound"]
+[connection signal="right_clicked" from="Button" to="." method="_right_clicked"]

@@ -1,8 +1,10 @@
 extends VBoxContainer
 
+
 var using_sound_file: bool
 var sound_file: AudioStreamMP3
 var sound_effect: SoundEffect
+signal remove_sound_request(s: SoundEffect)
 
 #function from AudioStreamMP3 page on godot docs
 func load_mp3(path: String) -> AudioStreamMP3:
@@ -13,6 +15,7 @@ func load_mp3(path: String) -> AudioStreamMP3:
 
 
 func set_sound(sound: SoundEffect) -> void:
+	sound_effect = sound
 	if sound.is_sound_file():
 		sound_file = load_mp3(sound.path_to_sound)
 		using_sound_file = true
@@ -29,3 +32,7 @@ func play_sound() -> void:
 	sound_player.play()
 	await sound_player.finished
 	remove_child(sound_player) # very important for memory-efficiency
+	sound_player.queue_free() #speeds up deletion
+
+func _right_clicked() -> void:
+	remove_sound_request.emit(sound_effect)
