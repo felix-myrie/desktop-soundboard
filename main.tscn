@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://gnhroxve1obr"]
+[gd_scene load_steps=19 format=3 uid="uid://gnhroxve1obr"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_4pufq"]
 [ext_resource type="Script" path="res://scripts/classes/sound_effect.gd" id="2_l1pd6"]
@@ -8,20 +8,45 @@
 [ext_resource type="PackedScene" uid="uid://cle70hrepbki5" path="res://scenes/interface/sound_display.tscn" id="5_ar08i"]
 [ext_resource type="Script" path="res://scripts/config_controller.tres.gd" id="6_8tv2u"]
 [ext_resource type="PackedScene" uid="uid://cvcc21p0bq312" path="res://scenes/interface/add_sound_display.tscn" id="7_yosci"]
+[ext_resource type="PackedScene" uid="uid://dloyrnl7hpgsh" path="res://scenes/interface/reset_box.tscn" id="8_37nu7"]
 [ext_resource type="Script" path="res://scripts/confirm_sound_deletion.gd" id="8_rb1df"]
 [ext_resource type="FontFile" uid="uid://dpv8qrph2ijc6" path="res://Rubik-Medium.ttf" id="9_asuf0"]
 [ext_resource type="Script" path="res://scripts/sound_adder_popup.gd" id="11_wm0sm"]
 
-[sub_resource type="Resource" id="Resource_oe602"]
+[sub_resource type="Resource" id="Resource_n2p8i"]
 script = ExtResource("2_l1pd6")
-display_name = "silly sound"
-path_to_sound = "C:\\Users\\Felix\\Downloads\\thank you for travelling on the northern line.mp3"
-emoji = "🥱"
+display_name = "Applause"
+path_to_sound = "res://sounds/applause.mp3"
+emoji = "👏"
+
+[sub_resource type="Resource" id="Resource_kgdsj"]
+script = ExtResource("2_l1pd6")
+display_name = "Funny"
+path_to_sound = "res://sounds/funnylaugh.mp3"
+emoji = "🤣"
+
+[sub_resource type="Resource" id="Resource_cald7"]
+script = ExtResource("2_l1pd6")
+display_name = "Jackpot"
+path_to_sound = "res://sounds/jackpot.mp3"
+emoji = "💸"
+
+[sub_resource type="Resource" id="Resource_vuouc"]
+script = ExtResource("2_l1pd6")
+display_name = "Sad"
+path_to_sound = "res://sounds/sadtrombone.mp3"
+emoji = "🎺"
+
+[sub_resource type="Resource" id="Resource_iyib3"]
+script = ExtResource("2_l1pd6")
+display_name = "Scary laugh"
+path_to_sound = "res://sounds/scarylaugh.mp3"
+emoji = "😨"
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_3qb72"]
 buffer_length = 0.01
 
-[node name="Control" type="Control" node_paths=PackedStringArray("main_scene", "settings_scene", "opaque_background", "scroller", "sound_deleter", "sound_adder", "sound_adder_popup")]
+[node name="Control" type="Control" node_paths=PackedStringArray("main_scene", "settings_scene", "opaque_background", "scroller", "sound_deleter", "sound_adder", "reset_box", "sound_adder_popup")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,8 +60,9 @@ opaque_background = NodePath("Panel/OpaqueBG")
 scroller = NodePath("Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer")
 sound_deleter = NodePath("Panel/Container/SoundDeleter")
 sound_adder = NodePath("Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer/SoundAdder")
+reset_box = NodePath("Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer/Settings")
 sound_adder_popup = NodePath("Panel/Container/SoundAdderPopup")
-built_in_sounds = Array[ExtResource("2_l1pd6")]([SubResource("Resource_oe602")])
+built_in_sounds = Array[ExtResource("2_l1pd6")]([SubResource("Resource_n2p8i"), SubResource("Resource_kgdsj"), SubResource("Resource_cald7"), SubResource("Resource_vuouc"), SubResource("Resource_iyib3")])
 
 [node name="Audio" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamGenerator_3qb72")
@@ -86,6 +112,7 @@ size_flags_vertical = 3
 theme = ExtResource("2_tk1tv")
 
 [node name="Main" type="MarginContainer" parent="Panel/Container/VBoxContainer/PanelContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
@@ -140,19 +167,22 @@ layout_mode = 2
 [node name="SoundAdder" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("7_yosci")]
 layout_mode = 2
 
+[node name="Settings" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("8_37nu7")]
+layout_mode = 2
+
 [node name="SettingsPopulater" type="MarginContainer" parent="Panel/Container/VBoxContainer/PanelContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater" node_paths=PackedStringArray("completed_button")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("6_8tv2u")
+completed_button = NodePath("Button")
 
 [node name="Label" type="Label" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer"]
 layout_mode = 2
@@ -233,6 +263,10 @@ size_flags_vertical = 4
 script = ExtResource("8_rb1df")
 text_box = NodePath("MarginContainer/VBoxContainer/Label")
 
+[node name="ColorRect" type="ColorRect" parent="Panel/Container/SoundDeleter"]
+layout_mode = 2
+color = Color(0.484408, 0.156807, 0.676554, 1)
+
 [node name="MarginContainer" type="MarginContainer" parent="Panel/Container/SoundDeleter"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -241,6 +275,7 @@ theme_override_constants/margin_right = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/Container/SoundDeleter/MarginContainer"]
 layout_mode = 2
+alignment = 1
 
 [node name="Label" type="Label" parent="Panel/Container/SoundDeleter/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(10, 10)
@@ -338,6 +373,7 @@ text = "Cancel
 "
 
 [connection signal="add_new_sound" from="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer/SoundAdder" to="." method="request_add_sound"]
+[connection signal="add_new_sound" from="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer/Settings" to="." method="settings"]
 [connection signal="state_updated" from="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer" to="." method="_apply_state"]
 [connection signal="toggled" from="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer/OpaqueBackgroundToggle" to="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer" method="_on_check_button_toggled"]
 [connection signal="pressed" from="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer/Button" to="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer" method="_submit"]

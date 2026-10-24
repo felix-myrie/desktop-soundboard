@@ -8,6 +8,7 @@ const AUDIO_DISPLAY_PATH : String = "res://scenes/interface/sound_display.tscn"
 @export var scroller: GridContainer
 @export var sound_deleter: PanelContainer
 @export var sound_adder: VBoxContainer
+@export var reset_box: VBoxContainer
 @export var sound_adder_popup: PanelContainer
 #key exports used in app
 @export var built_in_sounds: Array[SoundEffect] = []
@@ -30,7 +31,7 @@ func _apply_state(state: AppState) -> void:
 	
 	opaque_background.visible = state.opaque_background
 	opaque_background.color = state.background_colour
-	settings_scene.visible = false
+	settings_scene.get_parent().visible = false
 	main_scene.visible = true
 	sounds  = []
 	for s in state.sound_effects:
@@ -50,6 +51,7 @@ func _apply_state(state: AppState) -> void:
 		else:
 			push_warning('cannot instantiate audio display')
 	scroller.add_child(sound_adder)
+	scroller.add_child(reset_box)
 	#sound_adder.connect('add_new_sound', request_add_sound)
 	
 
@@ -79,3 +81,11 @@ func add_sound(sound: SoundEffect) -> void:
 	var state: AppState = settings_scene.load_state_file()
 	state.sound_effects.append(sound)
 	settings_scene.apply_new_state(state)
+
+func settings() -> void:
+	print('heloo')
+	main_scene.visible = false
+	settings_scene.get_parent().visible = true
+	await settings_scene.update()
+	main_scene.visible = true
+	settings_scene.get_parent().visible = false
