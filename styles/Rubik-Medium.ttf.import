@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://dpv8qrph2ijc6"
-path="res://.godot/imported/Rubik-Medium.ttf-e9f682389c1da7b5ae22a98945e03b9d.fontdata"
+path="res://.godot/imported/Rubik-Medium.ttf-93b574dd23841d208985797db7b3c0a1.fontdata"
 
 [deps]
 
-source_file="res://Rubik-Medium.ttf"
-dest_files=["res://.godot/imported/Rubik-Medium.ttf-e9f682389c1da7b5ae22a98945e03b9d.fontdata"]
+source_file="res://styles/Rubik-Medium.ttf"
+dest_files=["res://.godot/imported/Rubik-Medium.ttf-93b574dd23841d208985797db7b3c0a1.fontdata"]
 
 [params]
 

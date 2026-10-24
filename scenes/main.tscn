@@ -1,44 +1,44 @@
 [gd_scene load_steps=19 format=3 uid="uid://gnhroxve1obr"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_4pufq"]
-[ext_resource type="Script" path="res://scripts/classes/sound_effect.gd" id="2_l1pd6"]
-[ext_resource type="Theme" uid="uid://bybobnlx5kgbl" path="res://theme.tres" id="2_tk1tv"]
-[ext_resource type="StyleBox" uid="uid://bxfatexmf6nfx" path="res://styles/background_box.tres" id="3_sen2b"]
-[ext_resource type="PackedScene" uid="uid://dawvvjluljh8h" path="res://scenes/interface/scroller.tscn" id="4_finpa"]
-[ext_resource type="PackedScene" uid="uid://cle70hrepbki5" path="res://scenes/interface/sound_display.tscn" id="5_ar08i"]
-[ext_resource type="Script" path="res://scripts/config_controller.tres.gd" id="6_8tv2u"]
-[ext_resource type="PackedScene" uid="uid://cvcc21p0bq312" path="res://scenes/interface/add_sound_display.tscn" id="7_yosci"]
-[ext_resource type="PackedScene" uid="uid://dloyrnl7hpgsh" path="res://scenes/interface/reset_box.tscn" id="8_37nu7"]
-[ext_resource type="Script" path="res://scripts/confirm_sound_deletion.gd" id="8_rb1df"]
-[ext_resource type="FontFile" uid="uid://dpv8qrph2ijc6" path="res://Rubik-Medium.ttf" id="9_asuf0"]
-[ext_resource type="Script" path="res://scripts/sound_adder_popup.gd" id="11_wm0sm"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_l357u"]
+[ext_resource type="Script" path="res://scripts/classes/sound_effect.gd" id="2_jmvfe"]
+[ext_resource type="Theme" uid="uid://bybobnlx5kgbl" path="res://styles/theme.tres" id="3_y7qpt"]
+[ext_resource type="StyleBox" uid="uid://bxfatexmf6nfx" path="res://styles/background_box.tres" id="4_006ox"]
+[ext_resource type="PackedScene" uid="uid://dawvvjluljh8h" path="res://scenes/interface/scroller.tscn" id="5_guchc"]
+[ext_resource type="PackedScene" uid="uid://cle70hrepbki5" path="res://scenes/interface/sound_display.tscn" id="6_if64j"]
+[ext_resource type="PackedScene" uid="uid://cvcc21p0bq312" path="res://scenes/interface/add_sound_display.tscn" id="7_nc5tm"]
+[ext_resource type="PackedScene" uid="uid://dloyrnl7hpgsh" path="res://scenes/interface/reset_box.tscn" id="8_3s2jl"]
+[ext_resource type="Script" path="res://scripts/config_controller.tres.gd" id="9_8sv8u"]
+[ext_resource type="Script" path="res://scripts/confirm_sound_deletion.gd" id="10_rt16q"]
+[ext_resource type="FontFile" uid="uid://dpv8qrph2ijc6" path="res://styles/Rubik-Medium.ttf" id="11_4bbdo"]
+[ext_resource type="Script" path="res://scripts/sound_adder_popup.gd" id="12_0je1s"]
 
 [sub_resource type="Resource" id="Resource_n2p8i"]
-script = ExtResource("2_l1pd6")
+script = ExtResource("2_jmvfe")
 display_name = "Applause"
 path_to_sound = "res://sounds/applause.mp3"
 emoji = "👏"
 
 [sub_resource type="Resource" id="Resource_kgdsj"]
-script = ExtResource("2_l1pd6")
+script = ExtResource("2_jmvfe")
 display_name = "Funny"
 path_to_sound = "res://sounds/funnylaugh.mp3"
 emoji = "🤣"
 
 [sub_resource type="Resource" id="Resource_cald7"]
-script = ExtResource("2_l1pd6")
+script = ExtResource("2_jmvfe")
 display_name = "Jackpot"
 path_to_sound = "res://sounds/jackpot.mp3"
 emoji = "💸"
 
 [sub_resource type="Resource" id="Resource_vuouc"]
-script = ExtResource("2_l1pd6")
+script = ExtResource("2_jmvfe")
 display_name = "Sad"
 path_to_sound = "res://sounds/sadtrombone.mp3"
 emoji = "🎺"
 
 [sub_resource type="Resource" id="Resource_iyib3"]
-script = ExtResource("2_l1pd6")
+script = ExtResource("2_jmvfe")
 display_name = "Scary laugh"
 path_to_sound = "res://sounds/scarylaugh.mp3"
 emoji = "😨"
@@ -53,7 +53,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_4pufq")
+script = ExtResource("1_l357u")
 main_scene = NodePath("Panel/Container/VBoxContainer/PanelContainer/Main")
 settings_scene = NodePath("Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer")
 opaque_background = NodePath("Panel/OpaqueBG")
@@ -62,7 +62,7 @@ sound_deleter = NodePath("Panel/Container/SoundDeleter")
 sound_adder = NodePath("Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer/SoundAdder")
 reset_box = NodePath("Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer/Settings")
 sound_adder_popup = NodePath("Panel/Container/SoundAdderPopup")
-built_in_sounds = Array[ExtResource("2_l1pd6")]([SubResource("Resource_n2p8i"), SubResource("Resource_kgdsj"), SubResource("Resource_cald7"), SubResource("Resource_vuouc"), SubResource("Resource_iyib3")])
+built_in_sounds = Array[ExtResource("2_jmvfe")]([SubResource("Resource_n2p8i"), SubResource("Resource_kgdsj"), SubResource("Resource_cald7"), SubResource("Resource_vuouc"), SubResource("Resource_iyib3")])
 
 [node name="Audio" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamGenerator_3qb72")
@@ -75,8 +75,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("2_tk1tv")
-theme_override_styles/panel = ExtResource("3_sen2b")
+theme = ExtResource("3_y7qpt")
+theme_override_styles/panel = ExtResource("4_006ox")
 
 [node name="OpaqueBG" type="ColorRect" parent="Panel"]
 visible = false
@@ -103,13 +103,13 @@ theme_override_constants/margin_bottom = 3
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/Container"]
 layout_mode = 2
 
-[node name="HBoxContainer" parent="Panel/Container/VBoxContainer" instance=ExtResource("4_finpa")]
+[node name="HBoxContainer" parent="Panel/Container/VBoxContainer" instance=ExtResource("5_guchc")]
 layout_mode = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="Panel/Container/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource("2_tk1tv")
+theme = ExtResource("3_y7qpt")
 
 [node name="Main" type="MarginContainer" parent="Panel/Container/VBoxContainer/PanelContainer"]
 visible = false
@@ -128,60 +128,60 @@ layout_mode = 2
 size_flags_horizontal = 3
 columns = 2
 
-[node name="VBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+[node name="VBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("6_if64j")]
 layout_mode = 2
 
-[node name="VBoxContainer2" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+[node name="VBoxContainer2" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("6_if64j")]
 layout_mode = 2
 
-[node name="VBoxContainer3" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+[node name="VBoxContainer3" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("6_if64j")]
 layout_mode = 2
 
-[node name="VBoxContainer4" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+[node name="VBoxContainer4" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("6_if64j")]
 layout_mode = 2
 
-[node name="VBoxContainer5" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+[node name="VBoxContainer5" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("6_if64j")]
 layout_mode = 2
 
-[node name="VBoxContainer6" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+[node name="VBoxContainer6" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("6_if64j")]
 layout_mode = 2
 
-[node name="VBoxContainer7" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+[node name="VBoxContainer7" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("6_if64j")]
 layout_mode = 2
 
-[node name="VBoxContainer8" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+[node name="VBoxContainer8" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("6_if64j")]
 layout_mode = 2
 
-[node name="VBoxContainer9" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+[node name="VBoxContainer9" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("6_if64j")]
 layout_mode = 2
 
-[node name="VBoxContainer10" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+[node name="VBoxContainer10" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("6_if64j")]
 layout_mode = 2
 
-[node name="VBoxContainer11" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+[node name="VBoxContainer11" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("6_if64j")]
 layout_mode = 2
 
-[node name="VBoxContainer12" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("5_ar08i")]
+[node name="VBoxContainer12" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("6_if64j")]
 layout_mode = 2
 
-[node name="SoundAdder" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("7_yosci")]
+[node name="SoundAdder" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("7_nc5tm")]
 layout_mode = 2
 
-[node name="Settings" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("8_37nu7")]
+[node name="Settings" parent="Panel/Container/VBoxContainer/PanelContainer/Main/VScrollBar/VBoxContainer" instance=ExtResource("8_3s2jl")]
 layout_mode = 2
 
 [node name="SettingsPopulater" type="MarginContainer" parent="Panel/Container/VBoxContainer/PanelContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 5
+theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 10
+theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater" node_paths=PackedStringArray("completed_button")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("6_8tv2u")
+script = ExtResource("9_8sv8u")
 completed_button = NodePath("Button")
 
 [node name="Label" type="Label" parent="Panel/Container/VBoxContainer/PanelContainer/SettingsPopulater/VBoxContainer"]
@@ -260,7 +260,7 @@ visible = false
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 4
-script = ExtResource("8_rb1df")
+script = ExtResource("10_rt16q")
 text_box = NodePath("MarginContainer/VBoxContainer/Label")
 
 [node name="ColorRect" type="ColorRect" parent="Panel/Container/SoundDeleter"]
@@ -280,7 +280,7 @@ alignment = 1
 [node name="Label" type="Label" parent="Panel/Container/SoundDeleter/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("9_asuf0")
+theme_override_fonts/font = ExtResource("11_4bbdo")
 text = "Are you sure you want to delete {sound name}?"
 horizontal_alignment = 1
 autowrap_mode = 3
@@ -304,7 +304,7 @@ visible = false
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 size_flags_vertical = 4
-script = ExtResource("11_wm0sm")
+script = ExtResource("12_0je1s")
 file_picker = NodePath("MarginContainer/VBoxContainer/FileDialog")
 button = NodePath("MarginContainer/VBoxContainer/PickFileName")
 sound_name_picker = NodePath("MarginContainer/VBoxContainer/SoundName")
@@ -327,7 +327,7 @@ alignment = 1
 [node name="Label" type="Label" parent="Panel/Container/SoundAdderPopup/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("9_asuf0")
+theme_override_fonts/font = ExtResource("11_4bbdo")
 text = "Pick a new sound file to add"
 horizontal_alignment = 1
 autowrap_mode = 3

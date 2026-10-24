@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dawvvjluljh8h"]
 
-[ext_resource type="Script" path="res://drag_control.gd" id="1_o1qud"]
-[ext_resource type="Theme" uid="uid://bybobnlx5kgbl" path="res://theme.tres" id="2_8sula"]
+[ext_resource type="Script" path="res://scripts/drag_control.gd" id="1_o1qud"]
+[ext_resource type="Theme" uid="uid://bybobnlx5kgbl" path="res://styles/theme.tres" id="2_8sula"]
 
 [node name="HBoxContainer" type="HBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
@@ -11,7 +11,7 @@ script = ExtResource("1_o1qud")
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
 theme = ExtResource("2_8sula")
-text = "cool sound board"
+text = "felix's sound board"
 
 [node name="Button" type="Button" parent="."]
 custom_minimum_size = Vector2(35, 0)
